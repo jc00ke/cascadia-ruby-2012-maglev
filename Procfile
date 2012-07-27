@@ -1,1 +1,1 @@
-web: bin/mongoose
+web: bin/mongoose -p $PORT
