@@ -1,1 +1,1 @@
-web: mongoose -p $PORT
+web: node plugin/speakernotes/

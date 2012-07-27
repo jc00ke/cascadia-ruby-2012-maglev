@@ -1,2 +1,2 @@
-web: mongoose
 guard: guard
+web: node plugin/speakernotes/
