@@ -1,2 +1,2 @@
 guard: guard
-web: node plugin/speakernotes/
+web: mongoose -p 1947
