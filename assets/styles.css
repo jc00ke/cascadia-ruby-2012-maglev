@@ -1,0 +1,15 @@
+.bottom {
+  bottom: 0;
+}
+
+.emphasis {
+  color: red;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.equation {
+  margin: 0 auto;
+  text-align: right;
+  width: 300px;
+}
