@@ -3,7 +3,7 @@
 }
 
 .emphasis {
-  color: red;
+  color: red !important;
   font-size: 1em;
   font-weight: bold;
 }
