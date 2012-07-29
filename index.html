@@ -253,37 +253,82 @@ Mongoid.identity_map_enabled = true
         </section>
 
         <section>
-          <h3>VM #1</h3>
-          <pre><code class="ruby"> 
-Maglev.abort_transaction
-j = Object.new
-j.object_id
+          <h2>Simple Example</h2>
+          <div class="fragment">
+            <h3>VM #1</h3>
+            <pre><code class="ruby"> 
+  Maglev.abort_transaction
+  j = Object.new
+  j.object_id
 # => 1234567
-Maglev::PERSISTENT_ROOT[:jesse] = j
-Maglev.commit_transaction
-          </code></pre>
+  Maglev::PERSISTENT_ROOT[:jesse] = j
+  Maglev.commit_transaction
+            </code></pre>
+          </div>
 
-          <h3>VM #2</h3>
-          <pre><code class="ruby"> 
-Maglev.abort_transaction
-Maglev::PERSISTENT_ROOT[:jesse].object_id
+          <div class="fragment">
+            <h3>VM #2</h3>
+            <pre><code class="ruby"> 
+  Maglev.abort_transaction
+  Maglev::PERSISTENT_ROOT[:jesse].object_id
 # => 1234567
-          </code></pre>
+            </code></pre>
+          </div>
         </section>
 
         <section>
           <h1>WAT?</h1>
-          <img src="/assets/maglev-stone-diagram.png" />
+          <div class="fragment">
+            <img src="/assets/maglev-stone-diagram.png" />
+          </div>
         </section>
 
         <section>
           <h1>Abort</h1>
-          <img src="/assets/maglev.abort_transaction.png" />
+          <div class="fragment">
+            <img src="/assets/maglev.abort_transaction.png" />
+          </div>
         </section>
 
         <section>
           <h1>Commit</h1>
-          <img src="/assets/maglev.commit_transaction.png" />
+          <div class="fragment">
+            <img src="/assets/maglev.commit_transaction.png" />
+          </div>
+        </section>
+
+        <section>
+          <h2 class="emphasis">Persistence by Reachability</h2>
+          <div class="fragment">
+            <h3>VM #1</h3>
+            <pre><code class="ruby"> 
+  Maglev.abort_transaction
+  names = []
+  names << "Ben"
+  names << "Shane"
+  Maglev::PERSISTENT_ROOT[:names] = names
+  Maglev.commit_transaction
+            </code></pre>
+          </div>
+
+          <div class="fragment">
+            <h3>VM #2</h3>
+            <pre><code class="ruby"> 
+  Maglev.abort_transaction
+  Maglev::PERSISTENT_ROOT[:names]
+# => ["Ben", "Shane"]
+            </code></pre>
+          </div>
+
+          <aside class="notes">
+            Those are the same string instances, even though we persisted the names array.
+          </aside>
+        </section>
+
+        <section>
+          <h1>Boring...</h1>
+
+          <h2>... but cool</h2>
         </section>
 				
 			</div>
