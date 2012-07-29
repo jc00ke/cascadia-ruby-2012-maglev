@@ -192,8 +192,83 @@
           </aside>
 				</section>
 
-        <section data-state="alert">
-          <h1>Transparent Object Persistence</h1>
+        <section>
+          <h2 class="emphasis">Transparent Object Persistence</h2>
+          <pre><code class="ruby"> 
+Maglev::PERSISTENT_ROOT
+          </code></pre>
+
+        </section>
+
+        <section>
+          <h2>How would you get the same object back when using some other database?</h2>
+        </section>
+
+        <section>
+          <h2>ActiveRecord</h2>
+          <pre><code class="ruby"> 
+# config/application.rb
+config.active_record.identity_map = true
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>DataMapper</h2>
+          <pre><code class="ruby"> 
+# yay!
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Sequel</h2>
+          <pre><code class="ruby"> 
+Sequel::Model.plugin :identity_map
+
+Sequel::Model.with_identity_map do
+  WickedCoolModel.first # ...
+end
+
+# or just on MySweetModel
+MySweetModel.plugin :identity_map
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Mongoid</h2>
+          <pre><code class="ruby"> 
+# config/mongoid.yml
+identity_map_enabled: true
+
+# or
+Mongoid.identity_map_enabled = true
+          </code></pre>
+        </section>
+
+        <section>
+          <h1>MagLev</h1>
+          <pre><code class="ruby"> 
+# there's no such thing as an identity map!
+          </code></pre>
+
+        </section>
+
+        <section>
+          <h3>VM #1</h3>
+          <pre><code class="ruby"> 
+Maglev.abort_transaction
+j = Object.new
+j.object_id
+# => 1234567
+Maglev::PERSISTENT_ROOT[:jesse] = j
+Maglev.commit_transaction
+          </code></pre>
+
+          <h3>VM #2</h3>
+          <pre><code class="ruby"> 
+Maglev.abort_transaction
+Maglev::PERSISTENT_ROOT[:jesse].object_id
+# => 1234567
+          </code></pre>
         </section>
 				
 			</div>
