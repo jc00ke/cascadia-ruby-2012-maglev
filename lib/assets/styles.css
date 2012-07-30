@@ -2,6 +2,10 @@
   bottom: 0;
 }
 
+.faded {
+  color: #666;
+}
+
 .emphasis {
   color: red !important;
   font-size: 1em;

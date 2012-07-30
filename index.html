@@ -46,7 +46,7 @@
           <!-- TODO: Add frowny face image -->
 
 					<aside class="notes">
-						You can't!
+						You can't! While we hopefully design our data model to fit our object model, we often must do things that don't quite feel right in order to make the database work for us. And since we all have to deal with roflscale sites, we have to take into account other considerations, like sharding, durability, etc.
 					</aside>
 				</section>
 
@@ -55,10 +55,14 @@
           <p>
             <img src="https://github.com/MagLev/maglev.github.com/raw/master/images/maglev-logo.gif" />
           </p>
+					<aside class="notes">
+            I would like to propose a solution, and it's called MagLev.
+          </aside>
         </section>
 
 				<section>
 					<section>
+            <h1>What is it?</h1>
 						<h2>It's like...</h2>
 					</section>
 					<section>
@@ -88,6 +92,9 @@
             <img src="/lib/assets/smalltalk-byte-balloon.png" alt="Smalltalk" />
             <!-- TODO: attribution - http://www.cc.kyoto-su.ac.jp/~atsushi/Smalltalkers/images/SmalltalkBalloon1998.jpg -->
 					</p>
+          <aside class="notes">
+            What's so special about Smalltalk? The image, which I'll explain in a sec.
+          </aside>
 				</section>
 
         <section>
@@ -98,44 +105,68 @@
               <hr />
               <h2>Ruby</h2>
           </div>
+          <aside class="notes">
+            I like to think Smalltalk had a threesome with Perl &amp; Lisp and we got Ruby. So it's only natural that Ruby gets an image at some point.
+          </aside>
         </section>
-
-				<section>
-          <h1>Transparent Object Persistence</h1>
-					<p>
-            <img src="/lib/assets/gemstone-s-logo.png" alt="GemStone/S" />
-            <!-- TODO: attribution - http://www.gemstone.com/products/gemstone -->
-					</p>
-				</section>
 
 				<section>
 					<blockquote cite="http://www.gemstone.com/products/gemstone">
             GemStone/S is the state-of-the-art platform for developing, deploying, and managing scalable, high-performance, multi-tier applications based on business <span class="emphasis">objects</span>.
 					</blockquote>
+					<p>
+            <img src="/lib/assets/gemstone-s-logo.png" alt="GemStone/S" />
+            <!-- TODO: attribution - http://www.gemstone.com/products/gemstone -->
+					</p>
           <aside class="notes">
-            A lot of power in that last word.
+            From the MagLev site. Lots of buzzwords, and a lot of power in that last word.
           </aside>
 				</section>
 
 				<section>
 					<h2>What's so special about Gemstone/S?</h2>
 					<ol>
-            <li class="fragment">Well-tuned VM to run Smalltalk</li>
-            <li class="fragment">Battle-tested</li>
-            <li class="fragment emphasis">Transparent Object Persistence</li>
+            <li>Well-tuned VM to run Smalltalk</li>
+					</ol>
+          <aside class="notes">
+            If you remember Avi Bryant's keynote from RailsConf in 2007 (or if you've ever done any Smalltalk programming) you might have heard that Smalltalk &amp; Ruby are basically the same language. So a VM that's been tuned over decades to run Smalltalk fast could easily be adapted to run Ruby fast. Some micro-benchmarks have put MagLev on par with C. Caveat to benchmarks, but still, pretty impressive.
+          </aside>
+				</section>
+
+				<section>
+					<h2>What's so special about Gemstone/S?</h2>
+					<ol>
+            <li class="faded">Well-tuned VM to run Smalltalk</li>
+            <li>
+              Battle-tested
+              <ul>
+                <li class="fragment">OOCL</li>
+                <li class="fragment">National Slovenian Gas</li>
+                <li class="fragment">JPMorgan Chase</li>
+                <li class="fragment">UBS</li>
+                <li class="fragment">Merril Lyn... haha just kidding</li>
+                <li class="fragment">JACK IN THE BOX!</li>
+              </ul>
+            </li>
+					</ol>
+          <aside class="notes">
+            Who uses the Smalltalk version?
+            <p>OOCL (which you can find the whitepaper on the Seaside site TODO: link in resources) manages millions of shipping containers around the world with office scattered across the globe.</p>
+            <p>The site ran for 10+ years continuously, which handled incorporating VAT, deregulations of EU energy market, a company split &amp; currency change to the Euro.</p>
+          </aside>
+				</section>
+
+				<section>
+					<h2>What's so special about Gemstone/S?</h2>
+					<ol>
+            <li class="faded">Well-tuned VM to run Smalltalk</li>
+            <li class="faded">Battle-tested</li>
+            <li class="emphasis">Transparent Object Persistence</li>
 					</ol>
 				</section>
 
-        <section>
-          <h2>MagLev</h2>
-          <h3>Smalltalk image for Ruby</h3>
-          <aside class="notes">
-            I like to think Smalltalk had a threesome with Perl &amp; Lisp and we got Ruby. So it's only natural that Ruby gets an image at some point.
-          </aside>
-        </section>
-
         <section data-state="alert">
-          <h2>WAT U MEAN IMAGE?</h2>
+          <h2>Transparent Object Persistence</h2>
           <p>
             <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Plasma-lamp_2.jpg/474px-Plasma-lamp_2.jpg" alt="plasma lamp" />
             <!-- TODO: attribution - I, Luc Viatour [GFDL (http://www.gnu.org/copyleft/fdl.html), CC-BY-SA-3.0 (http://creativecommons.org/licenses/by-sa/3.0/) or CC-BY-SA-2.5-2.0-1.0 (http://creativecommons.org/licenses/by-sa/2.5-2.0-1.0)], via Wikimedia Commons
@@ -143,6 +174,14 @@
           </p>
           <aside class="notes">
             An image is where the objects live. They are persisted there. They aren't serialized into some other format &amp; stored somewhere else. They <em>live</em> there.
+          </aside>
+        </section>
+
+        <section>
+          <h2>MagLev</h2>
+          <h3>Smalltalk image for Ruby</h3>
+          <aside class="notes">
+            We finally get to the shift in how we think about MagLev.
           </aside>
         </section>
 
@@ -167,8 +206,8 @@
           <h1>ORM</h1>
 					<h2>Object Relational Mapper</h2>
           <p>ActiveRecord</p>
-          <p>DataMapper</p>
           <p>Sequel</p>
+          <p>DataMapper</p>
 				</section>
 				
 				<section>
@@ -202,6 +241,16 @@ Maglev::PERSISTENT_ROOT
 
         <section>
           <h2>How would you get the same object back when using some other database?</h2>
+          <aside class="notes">
+            Just because you get back an object with the same data does not make it the same object.
+          </aside>
+        </section>
+
+        <section>
+          <h1>Identity Map</h1>
+          <aside class="notes">
+            Take your typical web app where you're dealing with independent requests. How does the object mapping framework handle fetching the same object?
+          </aside>
         </section>
 
         <section>
@@ -209,13 +258,6 @@ Maglev::PERSISTENT_ROOT
           <pre><code class="ruby"> 
 # config/application.rb
 config.active_record.identity_map = true
-          </code></pre>
-        </section>
-
-        <section>
-          <h2>DataMapper</h2>
-          <pre><code class="ruby"> 
-# yay!
           </code></pre>
         </section>
 
@@ -230,6 +272,13 @@ end
 
 # or just on MySweetModel
 MySweetModel.plugin :identity_map
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>DataMapper</h2>
+          <pre><code class="ruby"> 
+# yay!
           </code></pre>
         </section>
 
@@ -249,12 +298,26 @@ Mongoid.identity_map_enabled = true
           <pre><code class="ruby"> 
 # there's no such thing as an identity map!
           </code></pre>
-
         </section>
 
         <section>
           <h2>Simple Example</h2>
-          <div class="fragment">
+          <div>
+            <h3>VM #1</h3>
+            <pre><code class="ruby"> 
+  Maglev.abort_transaction
+  j = Object.new
+  j.object_id
+# => 1234567
+  Maglev::PERSISTENT_ROOT[:jesse] = j
+  Maglev.commit_transaction
+            </code></pre>
+          </div>
+        </section>
+
+        <section>
+          <h2>Simple Example</h2>
+          <div>
             <h3>VM #1</h3>
             <pre><code class="ruby"> 
   Maglev.abort_transaction
@@ -266,7 +329,7 @@ Mongoid.identity_map_enabled = true
             </code></pre>
           </div>
 
-          <div class="fragment">
+          <div>
             <h3>VM #2</h3>
             <pre><code class="ruby"> 
   Maglev.abort_transaction
@@ -278,21 +341,33 @@ Mongoid.identity_map_enabled = true
 
         <section>
           <h1>WAT?</h1>
-          <div class="fragment">
+        </section>
+
+        <section>
+          <h1>WAT?</h1>
+          <div>
             <img src="/lib/assets/maglev-stone-diagram.png" />
           </div>
         </section>
 
         <section>
           <h1>Abort</h1>
-          <div class="fragment">
+        </section>
+
+        <section>
+          <h1>Abort</h1>
+          <div>
             <img src="/lib/assets/maglev.abort_transaction.png" />
           </div>
         </section>
 
         <section>
           <h1>Commit</h1>
-          <div class="fragment">
+        </section>
+
+        <section>
+          <h1>Commit</h1>
+          <div>
             <img src="/lib/assets/maglev.commit_transaction.png" />
           </div>
         </section>
@@ -302,12 +377,15 @@ Mongoid.identity_map_enabled = true
           <div class="fragment">
             <h3>VM #1</h3>
             <pre><code class="ruby"> 
-  Maglev.abort_transaction
-  names = []
-  names << "Ben"
-  names << "Shane"
-  Maglev::PERSISTENT_ROOT[:names] = names
-  Maglev.commit_transaction
+Maglev.abort_transaction
+names = []
+ben = "Ben"
+names << ben
+names << "Shane"
+Maglev::PERSISTENT_ROOT[:names] = names
+Maglev.commit_transaction
+ben.object_id
+# => 9876543
             </code></pre>
           </div>
 
@@ -317,6 +395,8 @@ Mongoid.identity_map_enabled = true
   Maglev.abort_transaction
   Maglev::PERSISTENT_ROOT[:names]
 # => ["Ben", "Shane"]
+names.first.object_id
+# => 9876543
             </code></pre>
           </div>
 
@@ -326,18 +406,12 @@ Mongoid.identity_map_enabled = true
         </section>
 
         <section>
-          <h1>Boring...</h1>
-
-          <h2>...but cool</h2>
-        </section>
-
-        <section>
           <h3>A wise man once asked...</h3>
-          <blockquote>
+          <blockquote class="fragment">
             How much do you think about saving your data instead of using it?
           </blockquote>
           <h4>Dale Henrichs</h4>
-          <img src="/lib/assets/dale.jpg" alt="Dale Henrichs" />
+          <img class="fragment" src="/lib/assets/dale.jpg" alt="Dale Henrichs" />
 
           <aside class="notes">
             Ponytail!
