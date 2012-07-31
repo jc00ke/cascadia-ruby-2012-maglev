@@ -42,8 +42,26 @@
 				</section>
 				
 				<section>
-					<h1>Reality?</h1>
+					<h1>The Problem</h1>
           <!-- TODO: Add frowny face image -->
+          <table id="db_table">
+            <tr>
+              <td>
+                <p class="fragment">PostgreSQL</p>
+                <p class="fragment">Redis</p>
+                <p class="fragment">MongoDB</p>
+                <p class="fragment">CouchDB</p>
+                <p class="fragment">MySQL</p>
+              </td>
+              <td class="right-align">
+                <p class="fragment">Neo4j</p>
+                <p class="fragment">Memcache</p>
+                <p class="fragment">ClearDB <span class="emphasis">o_O</span></p>
+                <p class="fragment">JustOneDB <span class="emphasis">o_O</span></p>
+                <p class="fragment">Xeround <span class="emphasis">o_O</span></p>
+              </td>
+            </tr>
+          </table>
 
 					<aside class="notes">
 						You can't! While we hopefully design our data model to fit our object model, we often must do things that don't quite feel right in order to make the database work for us. And since we all have to deal with roflscale sites, we have to take into account other considerations, like sharding, durability, etc.
@@ -125,6 +143,13 @@
 
 				<section>
 					<h2>What's so special about Gemstone/S?</h2>
+          <aside class="notes">
+            If you remember Avi Bryant's keynote from RailsConf in 2007 (or if you've ever done any Smalltalk programming) you might have heard that Smalltalk &amp; Ruby are basically the same language. So a VM that's been tuned over decades to run Smalltalk fast could easily be adapted to run Ruby fast. Some micro-benchmarks have put MagLev on par with C. Caveat to benchmarks, but still, pretty impressive.
+          </aside>
+				</section>
+
+				<section>
+					<h2>What's so special about Gemstone/S?</h2>
 					<ol>
             <li>Well-tuned VM to run Smalltalk</li>
 					</ol>
@@ -143,7 +168,6 @@
                 <li class="fragment">OOCL</li>
                 <li class="fragment">National Slovenian Gas</li>
                 <li class="fragment">JPMorgan Chase</li>
-                <li class="fragment">UBS</li>
                 <li class="fragment">Merril Lyn... haha just kidding</li>
                 <li class="fragment">JACK IN THE BOX!</li>
               </ul>
@@ -313,23 +337,8 @@ Mongoid.identity_map_enabled = true
   Maglev.commit_transaction
             </code></pre>
           </div>
-        </section>
 
-        <section>
-          <h2>Simple Example</h2>
-          <div>
-            <h3>VM #1</h3>
-            <pre><code class="ruby"> 
-  Maglev.abort_transaction
-  j = Object.new
-  j.object_id
-# => 1234567
-  Maglev::PERSISTENT_ROOT[:jesse] = j
-  Maglev.commit_transaction
-            </code></pre>
-          </div>
-
-          <div>
+          <div class="fragment">
             <h3>VM #2</h3>
             <pre><code class="ruby"> 
   Maglev.abort_transaction
@@ -341,33 +350,21 @@ Mongoid.identity_map_enabled = true
 
         <section>
           <h1>WAT?</h1>
-        </section>
-
-        <section>
-          <h1>WAT?</h1>
-          <div>
+          <div class="fragment">
             <img src="/lib/assets/maglev-stone-diagram.png" />
           </div>
         </section>
 
         <section>
           <h1>Abort</h1>
-        </section>
-
-        <section>
-          <h1>Abort</h1>
-          <div>
+          <div class="fragment">
             <img src="/lib/assets/maglev.abort_transaction.png" />
           </div>
         </section>
 
         <section>
           <h1>Commit</h1>
-        </section>
-
-        <section>
-          <h1>Commit</h1>
-          <div>
+          <div class="fragment">
             <img src="/lib/assets/maglev.commit_transaction.png" />
           </div>
         </section>
@@ -379,12 +376,11 @@ Mongoid.identity_map_enabled = true
             <pre><code class="ruby"> 
 Maglev.abort_transaction
 names = []
-ben = "Ben"
-names << ben
-names << "Shane"
+gorby = "Gorby Thunderhorse"
+names << gorby
 Maglev::PERSISTENT_ROOT[:names] = names
 Maglev.commit_transaction
-ben.object_id
+gorby.object_id
 # => 9876543
             </code></pre>
           </div>
@@ -393,9 +389,7 @@ ben.object_id
             <h3>VM #2</h3>
             <pre><code class="ruby"> 
   Maglev.abort_transaction
-  Maglev::PERSISTENT_ROOT[:names]
-# => ["Ben", "Shane"]
-names.first.object_id
+  Maglev::PERSISTENT_ROOT[:names].first.object_id
 # => 9876543
             </code></pre>
           </div>
@@ -407,10 +401,12 @@ names.first.object_id
 
         <section>
           <h3>A wise man once asked...</h3>
-          <blockquote class="fragment">
-            How much do you think about saving your data instead of using it?
-          </blockquote>
-          <h4>Dale Henrichs</h4>
+          <div class="fragment">
+            <blockquote>
+              How much do you think about saving your data instead of using it?
+            </blockquote>
+            <h4>Dale Henrichs</h4>
+          </div>
           <img class="fragment" src="/lib/assets/dale.jpg" alt="Dale Henrichs" />
 
           <aside class="notes">
@@ -419,7 +415,7 @@ names.first.object_id
         </section>
 
         <section>
-          <h3>What would you like to persist today?</h3>
+          <h3>What can you (easily) persist today?</h3>
           <p class="fragment">Arrays</p>
           <p class="fragment">Sets</p>
           <p class="fragment">Hashes</p>
@@ -442,6 +438,25 @@ names.first.object_id
         </section>
 
         <section>
+          <h3>k-D Tree benchmarks<span class="emphasis">*</span></h3>
+          <img src="/lib/assets/2D-tree-benchmarks.png" alt="2D Tree" />
+          <p class="fragment emphasis"><span>*</span>LIES!</p>
+        </section>
+
+        <section>
+          <h3>k-D Tree benchmarks</h3>
+          <img src="/lib/assets/2D-tree-benchmarks-no-creation.png" alt="2D Tree w/o creation" />
+        </section>
+
+        <section>
+          <h3>k-D Tree benchmarks</h3>
+          <img src="/lib/assets/2D-tree-benchmarks-no-creation-no-1.8.7.png" alt="2D Tree w/o creation" />
+          <aside class="notes">
+            What does this tell us? Only that MagLev keeps up. That's not really the point, though. Think about all the code you'd have to write in order to persist this for another run, or reporting.
+          </aside>
+        </section>
+
+        <section>
           <h1>A confession</h1>
           <h2 class="fragment">I lied about the whole "forget about the database" thing</h2>
         </section>
@@ -455,6 +470,25 @@ names.first.object_id
           <h1>I had a moment</h1>
           <img src="/lib/assets/aha.jpg" class="fragment" />
           <!-- TODO: attribute - http://audioporncentral.com/2008/10/a-ha-take-on-me-literal-video-version.html -->
+        </section>
+
+        <section>
+          <h2>What I wanted to build</h2>
+          <img class="fragment" src="/lib/assets/eqh-ideal.png" alt="Ideal EQH design" />
+        </section>
+
+        <section>
+          <img class="fragment" src="/lib/assets/service-all-the-things.jpg" alt="Obligatory meme" />
+        </section>
+
+        <section>
+          <h2>What I ended up building</h2>
+          <img class="fragment" src="/lib/assets/eqh-actual.png" alt="Actual EQH design" />
+        </section>
+
+        <section>
+          <h2>What I could've built with MagLev</h2>
+          <img class="fragment" src="/lib/assets/eqh-maglev.png" alt="MagLev EQH design" />
         </section>
 				
 			</div>
