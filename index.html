@@ -327,43 +327,47 @@ Mongoid.identity_map_enabled = true
         <section>
           <h2>Simple Example</h2>
           <div>
-            <h3>VM #1</h3>
             <pre><code class="ruby"> 
-  Maglev.abort_transaction
-  j = Object.new
-  j.object_id
+# VM #1
+Maglev.abort_transaction
+j = Object.new
+j.object_id
 # => 1234567
-  Maglev::PERSISTENT_ROOT[:jesse] = j
-  Maglev.commit_transaction
+Maglev::PERSISTENT_ROOT[:jesse] = j
+Maglev.commit_transaction
             </code></pre>
           </div>
 
           <div class="fragment">
-            <h3>VM #2</h3>
             <pre><code class="ruby"> 
-  Maglev.abort_transaction
-  Maglev::PERSISTENT_ROOT[:jesse].object_id
+# VM #2
+Maglev.abort_transaction
+Maglev::PERSISTENT_ROOT[:jesse].object_id
 # => 1234567
             </code></pre>
           </div>
         </section>
 
         <section>
-          <h1>WAT?</h1>
+          <h1>What is happening?</h1>
           <div class="fragment">
             <img src="/lib/assets/maglev-stone-diagram.png" />
           </div>
         </section>
 
         <section>
-          <h1>Abort</h1>
+            <pre><code class="ruby"> 
+Maglev.abort_transaction
+            </code></pre>
           <div class="fragment">
             <img src="/lib/assets/maglev.abort_transaction.png" />
           </div>
         </section>
 
         <section>
-          <h1>Commit</h1>
+            <pre><code class="ruby"> 
+Maglev.commit_transaction
+            </code></pre>
           <div class="fragment">
             <img src="/lib/assets/maglev.commit_transaction.png" />
           </div>
@@ -372,24 +376,24 @@ Mongoid.identity_map_enabled = true
         <section>
           <h2 class="emphasis">Persistence by Reachability</h2>
           <div class="fragment">
-            <h3>VM #1</h3>
             <pre><code class="ruby"> 
+# VM #1
 Maglev.abort_transaction
-names = []
-gorby = "Gorby Thunderhorse"
-names << gorby
-Maglev::PERSISTENT_ROOT[:names] = names
+cats = []
+pierre = "Lucky Pierre"
+cats << pierre
+Maglev::PERSISTENT_ROOT[:cats] = cats
 Maglev.commit_transaction
-gorby.object_id
+pierre.object_id
 # => 9876543
             </code></pre>
           </div>
 
           <div class="fragment">
-            <h3>VM #2</h3>
             <pre><code class="ruby"> 
-  Maglev.abort_transaction
-  Maglev::PERSISTENT_ROOT[:names].first.object_id
+# VM #2
+Maglev.abort_transaction
+Maglev::PERSISTENT_ROOT[:cats].first.object_id
 # => 9876543
             </code></pre>
           </div>
