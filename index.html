@@ -218,9 +218,9 @@
 				
 				<section>
           <h1>Intervention Time</h1>
-          <h2>O*Ms are a crutch<span class="emphasis">*</span></h2>
+          <h2>Object Mappers are a crutch<span class="emphasis">*</span></h2>
           <aside class="notes">
-            * I use them all the time.
+            * I use them all the time. They're fantastic libraries of course, and we wouldn't be here without them. But, I'd argue that when you write code against an object mapper, you are subconsciously concerned with how the data is stored. There's a mismatch there which is unfortunate at best.
           </aside>
 				</section>
 				
@@ -247,8 +247,10 @@
 				</section>
 
 				<section>
-					<h2>Ruby is about objects, right?</h2>
+					<h2>Ruby is all about objects, right?</h2>
+          <img src="/lib/assets/fixie.jpg" alt="My first fixie, when it wasn't broken yet" />
           <aside class="notes">
+            We regularly create &amp; destroy the "same" object.
             Analogy - put your bike in garage at night, take it apart. Put it back together in the morning. Someone wants to borrow it? You have to teach them how to disassemble &amp; reassemble too!
           </aside>
 				</section>
@@ -262,7 +264,7 @@ Maglev::PERSISTENT_ROOT
         </section>
 
         <section>
-          <h2>How would you get the same object back when using some other database?</h2>
+          <h2>How would you get the same object back when using an object mapper?</h2>
           <aside class="notes">
             Just because you get back an object with the same data does not make it the same object.
           </aside>
