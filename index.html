@@ -146,6 +146,33 @@ insert into users...
           </p>
         </section>
 
+				<section>
+					<blockquote cite="http://www.gemstone.com/products/gemstone">
+            GemStone/S is the state-of-the-art platform for developing, deploying, and managing scalable, high-performance, multi-tier applications based on business <span class="emphasis">objects</span>.
+					</blockquote>
+					<p>
+            <img src="/lib/assets/gemstone-s-logo.png" alt="GemStone/S" />
+            <!-- TODO: attribution - http://www.gemstone.com/products/gemstone -->
+					</p>
+          <aside class="notes">
+            From the MagLev site. Lots of buzzwords, and a lot of power in that last word.
+            <ol>
+              <li>Well-tuned VM to run Smalltalk</li>
+              <li>
+                Battle-tested
+                <ul>
+                  <li>OOCL</li>
+                  <li>National Slovenian Gas</li>
+                  <li>JPMorgan Chase</li>
+                  <li>Merril Lyn... haha just kidding</li>
+                  <li>JACK IN THE BOX!</li>
+                </ul>
+              </li>
+              <li>Transparent Object Persistence</li>
+            </ol>
+          </aside>
+        </section>
+
         <section>
           <h2>Things we depend on</h2>
           <h3 class="fragment">&lt;nokogiri&gt;</h3>
@@ -162,286 +189,18 @@ insert into users...
             <h4><a href="http://about.me/avibryant">Avi Bryant</a></h4>
           </div>
         </section>
-				
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-				<section>
-					<h1>The Problem</h1>
-          <table id="db_table">
-            <tr>
-              <td>
-                <p class="fragment">PostgreSQL</p>
-                <p class="fragment">MongoDB</p>
-                <p class="fragment">MySQL</p>
-              </td>
-              <td class="right-align">
-                <p class="fragment">ClearDB <span class="emphasis">o_O</span></p>
-                <p class="fragment">JustOneDB <span class="emphasis">o_O</span></p>
-                <p class="fragment">Xeround <span class="emphasis">o_O</span></p>
-              </td>
-            </tr>
-          </table>
-
-					<aside class="notes">
-						You can't! While we hopefully design our data model to fit our object model, we often must do things that don't quite feel right in order to make the database work for us. And since we all have to deal with roflscale sites, we have to take into account other considerations, like sharding, durability, etc.
-					</aside>
-				</section>
-
-        <section>
-          <h1>What is it?</h1>
-          <h2>It's like...</h2>
-        </section>
-
-        <section>
-          <p>
-            <img src="/lib/assets/cruby-logo.png" alt="CRuby" height="350" width="350" />
-          </p>
-        </section>
-
-        <section>
-          <p>
-            <img src="/lib/assets/rbx-logo.png" alt="Rubinius" height="350" width="350" />
-          </p>
-        </section>
-
-        <section>
-          <p>
-            <img src="/lib/assets/jruby-logo.png" alt="JRuby" />
-          </p>
-        </section>
-
-        <section>
-            <div class="equation">
-              <h2>Smalltalk</h2>
-              <h2>+ Perl</h2>
-              <h2>+ Lisp</h2>
-              <hr />
-              <h2>Ruby</h2>
-          </div>
-          <aside class="notes">
-            I like to think Smalltalk had a threesome with Perl &amp; Lisp and we got Ruby. So it's only natural that Ruby gets an image at some point.
-          </aside>
-        </section>
-
-				<section>
-					<blockquote cite="http://www.gemstone.com/products/gemstone">
-            GemStone/S is the state-of-the-art platform for developing, deploying, and managing scalable, high-performance, multi-tier applications based on business <span class="emphasis">objects</span>.
-					</blockquote>
-					<p>
-            <img src="/lib/assets/gemstone-s-logo.png" alt="GemStone/S" />
-            <!-- TODO: attribution - http://www.gemstone.com/products/gemstone -->
-					</p>
-          <aside class="notes">
-            From the MagLev site. Lots of buzzwords, and a lot of power in that last word.
-          </aside>
-				</section>
-
-				<section>
-					<h2>What's so special about Gemstone/S?</h2>
-          <aside class="notes">
-            If you remember Avi Bryant's keynote from RailsConf in 2007 (or if you've ever done any Smalltalk programming) you might have heard that Smalltalk &amp; Ruby are basically the same language. So a VM that's been tuned over decades to run Smalltalk fast could easily be adapted to run Ruby fast. Some micro-benchmarks have put MagLev on par with C. Caveat to benchmarks, but still, pretty impressive.
-          </aside>
-				</section>
-
-				<section>
-					<h2>What's so special about Gemstone/S?</h2>
-					<ol>
-            <li>Well-tuned VM to run Smalltalk</li>
-					</ol>
-          <aside class="notes">
-            If you remember Avi Bryant's keynote from RailsConf in 2007 (or if you've ever done any Smalltalk programming) you might have heard that Smalltalk &amp; Ruby are basically the same language. So a VM that's been tuned over decades to run Smalltalk fast could easily be adapted to run Ruby fast. Some micro-benchmarks have put MagLev on par with C. Caveat to benchmarks, but still, pretty impressive.
-          </aside>
-				</section>
-
-				<section>
-					<h2>What's so special about Gemstone/S?</h2>
-					<ol>
-            <li class="faded">Well-tuned VM to run Smalltalk</li>
-            <li>
-              Battle-tested
-              <ul>
-                <li class="fragment">OOCL</li>
-                <li class="fragment">National Slovenian Gas</li>
-                <li class="fragment">JPMorgan Chase</li>
-                <li class="fragment">Merril Lyn... haha just kidding</li>
-                <li class="fragment">JACK IN THE BOX!</li>
-              </ul>
-            </li>
-					</ol>
-          <aside class="notes">
-            Who uses the Smalltalk version?
-            <p>OOCL (which you can find the whitepaper on the Seaside site TODO: link in resources) manages millions of shipping containers around the world with office scattered across the globe.</p>
-            <p>The site ran for 10+ years continuously, which handled incorporating VAT, deregulations of EU energy market, a company split &amp; currency change to the Euro.</p>
-          </aside>
-				</section>
-
-				<section>
-					<h2>What's so special about Gemstone/S?</h2>
-					<ol>
-            <li class="faded">Well-tuned VM to run Smalltalk</li>
-            <li class="faded">Battle-tested</li>
-            <li class="emphasis">Transparent Object Persistence</li>
-					</ol>
-				</section>
-
-        <section>
-          <h2>MagLev</h2>
-          <h3>Smalltalk image for Ruby</h3>
-          <aside class="notes">
-            We finally get to the shift in how we think about MagLev.
-          </aside>
-        </section>
-
-        <section>
-          <h1>MagLev</h1>
-          <h2>Objects all the way down</h2>
-          <p>
-            <img src="/lib/assets/i-like-turtles.jpg" alt="I Like Turtles kid" />
-          </p>
-        </section>
-
-				
-				<section>
-          <h1>Intervention Time</h1>
-          <h2>Object Mappers are a crutch<span class="emphasis">*</span></h2>
-          <aside class="notes">
-            * I use them all the time. They're fantastic libraries of course, and we wouldn't be here without them. But, I'd argue that when you write code against an object mapper, you are subconsciously concerned with how the data is stored. There's a mismatch there which is unfortunate at best.
-          </aside>
-				</section>
-				
-				<section>
-          <h1>ORM</h1>
-					<h2>Object Relational Mapper</h2>
-          <p>ActiveRecord</p>
-          <p>Sequel</p>
-          <p>DataMapper</p>
-				</section>
-				
-				<section>
-          <h1>ODM</h1>
-					<h2>Object Document Mapper</h2>
-          <p>Mongoid</p>
-          <p>Ripple</p>
-          <p>Couch... something</p>
-				</section>
-				
-				<section>
-          <h1>OHM</h1>
-					<h2>Object Hash Mapper</h2>
-          <p>Ohm</p>
-				</section>
-
-				<section>
-					<h2>Ruby is all about objects, right?</h2>
-          <img src="/lib/assets/fixie.jpg" alt="My first fixie, when it wasn't broken yet" />
-          <aside class="notes">
-            We regularly create &amp; destroy the "same" object.
-            Analogy - put your bike in garage at night, take it apart. Put it back together in the morning. Someone wants to borrow it? You have to teach them how to disassemble &amp; reassemble too!
-          </aside>
-				</section>
 
         <section>
           <h2 class="emphasis">Transparent Object Persistence</h2>
           <pre><code class="ruby"> 
 Maglev::PERSISTENT_ROOT
           </code></pre>
-
         </section>
 
-        <section>
-          <h2>How would you get the same object back when using an object mapper?</h2>
-          <aside class="notes">
-            Just because you get back an object with the same data does not make it the same object.
-          </aside>
-        </section>
-
-        <section>
-          <h1>Identity Map</h1>
-          <aside class="notes">
-            Take your typical web app where you're dealing with independent requests. How does the object mapping framework handle fetching the same object?
-          </aside>
-        </section>
-
-        <section>
-          <h2>ActiveRecord</h2>
-          <pre><code class="ruby"> 
-# config/application.rb
-config.active_record.identity_map = true
-          </code></pre>
-        </section>
-
-        <section>
-          <h2>Sequel</h2>
-          <pre><code class="ruby"> 
-Sequel::Model.plugin :identity_map
-
-Sequel::Model.with_identity_map do
-  WickedCoolModel.first # ...
-end
-
-# or just on MySweetModel
-MySweetModel.plugin :identity_map
-          </code></pre>
-        </section>
-
-        <section>
-          <h2>DataMapper</h2>
-          <pre><code class="ruby"> 
-# yay!
-          </code></pre>
-        </section>
-
-        <section>
-          <h2>Mongoid</h2>
-          <pre><code class="ruby"> 
-# config/mongoid.yml
-identity_map_enabled: true
-
-# or
-Mongoid.identity_map_enabled = true
-          </code></pre>
-        </section>
-
-        <section>
-          <h1>MagLev</h1>
-          <pre><code class="ruby"> 
-# there's no such thing as an identity map!
-          </code></pre>
-        </section>
 
         <section>
           <h2>Simple Example</h2>
-          <div>
-            <pre><code class="ruby"> 
+          <pre><code class="ruby"> 
 # VM #1
 Maglev.abort_transaction
 j = Object.new
@@ -449,17 +208,14 @@ j.object_id
 # => 1234567
 Maglev::PERSISTENT_ROOT[:jesse] = j
 Maglev.commit_transaction
-            </code></pre>
-          </div>
+          </code></pre>
 
-          <div class="fragment">
-            <pre><code class="ruby"> 
+          <pre class="fragment"><code class="ruby"> 
 # VM #2
 Maglev.abort_transaction
 Maglev::PERSISTENT_ROOT[:jesse].object_id
 # => 1234567
-            </code></pre>
-          </div>
+          </code></pre>
         </section>
 
         <section>
@@ -489,8 +245,7 @@ Maglev.commit_transaction
 
         <section>
           <h2 class="emphasis">Persistence by Reachability</h2>
-          <div class="fragment">
-            <pre><code class="ruby"> 
+          <pre class="fragment"><code class="ruby"> 
 # VM #1
 Maglev.abort_transaction
 cats = []
@@ -500,17 +255,14 @@ Maglev::PERSISTENT_ROOT[:cats] = cats
 Maglev.commit_transaction
 pierre.object_id
 # => 9876543
-            </code></pre>
-          </div>
+          </code></pre>
 
-          <div class="fragment">
-            <pre><code class="ruby"> 
+          <pre class="fragment"><code class="ruby"> 
 # VM #2
 Maglev.abort_transaction
 Maglev::PERSISTENT_ROOT[:cats].first.object_id
 # => 9876543
-            </code></pre>
-          </div>
+          </code></pre>
 
           <aside class="notes">
             Those are the same string instances, even though we persisted the names array.
@@ -573,10 +325,6 @@ Maglev::PERSISTENT_ROOT[:cats].first.object_id
           <img class="fragment" src="/lib/assets/eqh-maglev.png" alt="MagLev EQH design" />
         </section>
 
-        <section>
-          <h2>Things that work</h2>
-
-        </section>
 				
 			</div>
 
