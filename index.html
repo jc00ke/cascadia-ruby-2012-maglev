@@ -174,6 +174,37 @@ insert into users...
         </section>
 
         <section>
+          <h1>A confession</h1>
+          <h2 class="fragment">I <span class="emphasis">lied</span></h2>
+        </section>
+
+        <section>
+          <h1>Decouple no more</h1>
+          <h2 class="fragment">MagLev <span class="emphasis">becomes</span> your API</h2>
+        </section>
+
+        <section>
+          <h1>I had a moment</h1>
+          <img src="/lib/assets/aha.jpg" class="fragment" />
+          <!-- TODO: attribute - http://audioporncentral.com/2008/10/a-ha-take-on-me-literal-video-version.html -->
+        </section>
+
+        <section>
+          <h2>What I wanted to build</h2>
+          <img class="fragment" src="/lib/assets/eqh-ideal.png" alt="Ideal EQH design" />
+        </section>
+
+        <section>
+          <h2>What I ended up building</h2>
+          <img class="fragment" src="/lib/assets/eqh-actual.png" alt="Actual EQH design" />
+        </section>
+
+        <section>
+          <h2>What I could've built with MagLev</h2>
+          <img class="fragment" src="/lib/assets/eqh-maglev.png" alt="MagLev EQH design" />
+        </section>
+
+        <section>
           <h2>Things we depend on</h2>
           <h3 class="fragment">&lt;nokogiri&gt;</h3>
           <h3 class="fragment">bcrypt</h3>
@@ -249,7 +280,7 @@ Maglev.commit_transaction
 # VM #1
 Maglev.abort_transaction
 cats = []
-pierre = "Lucky Pierre"
+pierre = Cat.new("Pierre")
 cats << pierre
 Maglev::PERSISTENT_ROOT[:cats] = cats
 Maglev.commit_transaction
@@ -264,9 +295,6 @@ Maglev::PERSISTENT_ROOT[:cats].first.object_id
 # => 9876543
           </code></pre>
 
-          <aside class="notes">
-            Those are the same string instances, even though we persisted the names array.
-          </aside>
         </section>
 
         <section>
@@ -278,7 +306,8 @@ Maglev::PERSISTENT_ROOT[:cats].first.object_id
           <p class="fragment">Sorted Sets</p>
 
           <aside class="notes">
-            We already have arrays via associations. Sets via constraints. Hashes with pg's hstore. Counters via db locks &amp; Redis. Sorted Sets via Redis, scopes.
+          <p>We already have arrays via associations. Sets via constraints. Hashes with pg's hstore. Counters via db locks &amp; Redis. Sorted Sets via Redis, scopes.</p>
+          <p>But again, you have to understand how all of these underlying databases work in order to use these data structures.</p>
           </aside>
         </section>
 
@@ -295,38 +324,206 @@ Maglev::PERSISTENT_ROOT[:cats].first.object_id
         </section>
 
         <section>
-          <h1>A confession</h1>
-          <h2 class="fragment">I <span class="emphasis">lied</span> about the whole "forget about the database" thing</h2>
+          <h1>Background Jobs</h1>
+          <div class="fragment">
+            <h2>Sidekiq</h2>
+            <h2>Resque</h2>
+            <h2>Queue Classic</h2>
+            <h2>RabbitMQ</h2>
+            <h2>etc...</h2>
+          </div>
         </section>
 
         <section>
-          <h1>Decouple no more</h1>
-          <h2 class="fragment">MagLev <span class="emphasis">becomes</span> your API</h2>
+          <h2>World's worst (but easiest) queue</h2>
+          <pre class="fragment"><code class="ruby"> 
+# pseudo
+jobs = []
+jobs << Proc.new { # doing work }
+jobs.shift.call
+          </code></pre>
         </section>
 
         <section>
-          <h1>I had a moment</h1>
-          <img src="/lib/assets/aha.jpg" class="fragment" />
-          <!-- TODO: attribute - http://audioporncentral.com/2008/10/a-ha-take-on-me-literal-video-version.html -->
+          <h2>Slightly-better producer</h2>
+          <pre class="fragment"><code class="ruby"> 
+Maglev.abort_transaction
+Maglev::PERSISTENT_ROOT[:q] ||= []
+
+while true do
+  Maglev::PERSISTENT_ROOT[:q] << Proc.new { # doing work }
+  Maglev.commit_transaction
+end
+          </code></pre>
         </section>
 
         <section>
-          <h2>What I wanted to build</h2>
-          <img class="fragment" src="/lib/assets/eqh-ideal.png" alt="Ideal EQH design" />
+          <h2>Slightly-better worker</h2>
+          <pre class="fragment"><code class="ruby"> 
+while true do
+  Maglev.abort_transaction
+  work = Maglev::PERSISTENT_ROOT[:q].shift
+  Maglev.commit_transaction
+  work.call if work
+end
+          </code></pre>
         </section>
 
         <section>
-          <h2>What I ended up building</h2>
-          <img class="fragment" src="/lib/assets/eqh-actual.png" alt="Actual EQH design" />
+          <h1>Issues?</h1>
+          <ol>
+            <li class="fragment">What happens if a commit fails?</li>
+            <li class="fragment">Array isn't a concurrent data structure</li>
+            <li class="fragment">others...</li>
+          </ol>
         </section>
 
         <section>
-          <h2>What I could've built with MagLev</h2>
-          <img class="fragment" src="/lib/assets/eqh-maglev.png" alt="MagLev EQH design" />
+          <h2>Slightly-better producer</h2>
+          <pre class="fragment"><code class="ruby"> 
+Maglev.abort_transaction
+Maglev::PERSISTENT_ROOT[:q] ||= []
+
+while true do
+  Maglev::PERSISTENT_ROOT[:q] << Proc.new { # doing work }
+  Maglev.commit_transaction
+rescue Maglev::CommitFailedException
+  puts "Couldn't add the job. Retrying..."
+  redo
+end
+          </code></pre>
         </section>
 
-				
-			</div>
+        <section>
+          <h2>Slightly-better worker</h2>
+          <pre class="fragment"><code class="ruby"> 
+while true do
+  Maglev.abort_transaction
+  work = Maglev::PERSISTENT_ROOT[:q].shift
+  Maglev.commit_transaction
+  work.call if work
+rescue Maglev::CommitFailedException
+  puts "Someone grabbed this job before me. Go grab another."
+  redo
+end
+          </code></pre>
+        </section>
+
+        <section>
+          <h1 class="emphasis">Tangent!</h1>
+          <h2>Are you persisting a proc?</h2>
+          <h2 class="fragment">Why yes, yes I am.</h2>
+          <h2 class="fragment">But you can't<span class="emphasis">*</span> marshal a proc!</h2>
+          <h2 class="fragment">I'm not</h2>
+        </section>
+
+        <section>
+          <h1>Issues?</h1>
+          <ol>
+            <li class="stricken">What happens if a commit fails?</li>
+            <li>Array isn't a concurrent data structure</li>
+            <li>others...</li>
+          </ol>
+        </section>
+
+        <section>
+          <h2>Reduced Conflict Classes</h2>
+          <div class="fragment">
+            <h3 class="normal-heading">RCHash</h3>
+            <h3 class="normal-heading">RCQueue</h3>
+            <h3 class="normal-heading">RCCounter<span class="emphasis">*</span></h3>
+            <h3 class="normal-heading">RCIdentityBag<span class="emphasis">*</span></h3>
+          </div>
+        </section>
+
+        <section>
+          <img src="/lib/assets/rchash-write.png" alt="Write RCHash diagram" />
+        </section>
+
+        <section>
+          <img src="/lib/assets/rchash-read.png" alt="Read RCHash diagram" />
+        </section>
+
+        <section>
+          <h2>Slightly-better producer</h2>
+          <pre class="fragment"><code class="ruby">
+require 'maglev/rcqueue'
+
+Maglev.abort_transaction
+Maglev::PERSISTENT_ROOT[:q] ||= RCQueue.new
+
+while true do
+  Maglev::PERSISTENT_ROOT[:q] << Proc.new { # doing work }
+  Maglev.commit_transaction
+rescue Maglev::CommitFailedException
+  puts "Couldn't add the job. Retrying..."
+  redo
+end
+          </code></pre>
+      </section>
+
+        <section>
+          <h1>Issues?</h1>
+          <ol>
+            <li class="stricken">What happens if a commit fails?</li>
+            <li class="stricken">Array isn't a concurrent data structure</li>
+            <li>others...</li>
+          </ol>
+        </section>
+
+      <section>
+        <h1>MagLev-Q</h1>
+        <a href="https://github.com/jc00ke/maglev-q">https://github.com/jc00ke/maglev-q</a>
+      </section>
+
+      <section>
+        <h1>What's the point?</h1>
+        <pre>
+Totals grouped by language (dominant language first):
+ruby:            34 (100.00%)
+
+Total Physical Source Lines of Code (SLOC)                = 34
+Development Effort Estimate, Person-Months                = 0.07
+Schedule Estimate, Months                                 = 0.90
+Estimated Average Number of Developers (Effort/Schedule)  = 0.08
+Total Estimated Cost to Develop                           = $ 776
+ (average salary = $56,286/year, overhead = 2.40).
+        </pre>
+        <p class="tiny">Generated using David A. Wheeler's 'SLOCCount'</p>
+      </section>
+
+      <section>
+        <h2>Like all implementations</h2>
+        <h2>MagLev needs help</h2>
+
+        <div class="fragment">RubySpec - catch up to 1.8.7</div>
+        <div class="fragment">Other C-ext</div>
+        <div class="fragment">RSpec's described_class, etc</div>
+        <div class="fragment">IO</div>
+      </section>
+
+      <section>
+        <h2>The future of MagLev</h2>
+        <h3>GemStone/S 3.1.0.1</h3>
+        <h3>HPI 1.9/Rails 4</h3>
+        <h3>Your cool projects</h3>
+
+        <pre><code class="bash">
+rvm install maglev
+ruby-build install maglev-1.1.0-dev
+./install.sh
+        </code></pre>
+      </section>
+
+      <section>
+        <h1>Jesse Cooke</h1>
+        <p><a href="https://github.com/jc00ke">github/jc00ke</a></p>
+        <p><a href="https://twitter.com/jc00ke">@jc00ke</a></p>
+        <p>jesse [at] jc00ke.com</p>
+
+      </section>
+
+		</div>
 
 			<!-- The navigational controls UI -->
 			<aside class="controls">

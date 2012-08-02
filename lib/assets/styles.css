@@ -37,3 +37,15 @@
   border: 1px solid white;
   padding: 15px;
 }
+
+.stricken {
+  text-decoration: line-through;
+}
+
+.normal-heading {
+  text-transform: none !important;
+}
+
+.tiny {
+  font-size: 0.5em;
+}
