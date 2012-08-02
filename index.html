@@ -40,22 +40,170 @@
 						if( navigator.userAgent.match( /(iPhone|iPad|iPod|Android)/i ) ) document.write( '<p style="color: rgba(0,0,0,0.3); text-shadow: none;">('+'Tap to navigate'+')</p>' );
 					</script>
 				</section>
+
+        <section>
+          <h1>Community</h1>
+          <img src="/lib/assets/tenderlove.jpg" alt="Tenderlove being awesome" data-attribution="http://jakescruggs.blogspot.com/2010/06/rails-conf-2010-day-2.html" />
+        </section>
+
+        <section>
+          <h1>Shoehorn</h1>
+          <table class="relational-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Birthdate</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Jesse Cooke</td>
+                <td>9/28/1981</td>
+                <td>jesse@jc00ke.com</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Jon Doe</td>
+                <td>6/23/1972</td>
+                <td>jon@doe.name</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2>Objects!</h2>
+          <pre><code class="ruby"> 
+Widget.find_by_name("foo")
+# or
+User.create({ email: "foo@bar.com" })
+          </code></pre>
+
+          <h2>Some Query Language :(</h2>
+          <pre><code class="sql"> 
+select * from widgets where name = 'foo';
+# or
+insert into users...
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Object-relational impedance mismatch</h2>
+          <h3><a href="http://en.wikipedia.org/wiki/Object-relational_impedance_mismatch">Wikipedia</a></h3>
+          <h3><a href="http://www.agiledata.org/essays/impedanceMismatch.html">Agile Data</a></h3>
+          <h3><a href="http://c2.com/cgi/wiki?ObjectRelationalImpedanceMismatch">Cunningham &amp; Cunningham</a></h3>
+          <h3><a href="http://www.codinghorror.com/blog/2006/06/object-relational-mapping-is-the-vietnam-of-computer-science.html">Coding Horror</a></h3>
+        </section>
+
+				<section>
+          <img src="/lib/assets/smalltalk-byte-balloon.png" alt="Smalltalk" data-attribution="http://www.cc.kyoto-su.ac.jp/~atsushi/Smalltalkers/images/SmalltalkBalloon1998.jpg" />
+				</section>
+
+        <section data-state="alert">
+          <h2>The Image</h2>
+          <p>
+            <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Plasma-lamp_2.jpg/474px-Plasma-lamp_2.jpg" alt="plasma lamp" />
+            <!-- TODO: attribution - I, Luc Viatour [GFDL (http://www.gnu.org/copyleft/fdl.html), CC-BY-SA-3.0 (http://creativecommons.org/licenses/by-sa/3.0/) or CC-BY-SA-2.5-2.0-1.0 (http://creativecommons.org/licenses/by-sa/2.5-2.0-1.0)], via Wikimedia Commons
+            http://commons.wikimedia.org/wiki/File%3APlasma-lamp_2.jpg -->
+          </p>
+          <aside class="notes">
+            An image is where the objects live. They are persisted there. They aren't serialized into some other format &amp; stored somewhere else. They <em>live</em> there.
+          </aside>
+        </section>
+
+        <section>
+          <h3>A wise man once asked...</h3>
+          <div class="fragment">
+            <blockquote>
+              How much do you think about saving your data instead of using it?
+            </blockquote>
+            <img src="/lib/assets/dale.jpg" alt="Dale Henrichs" />
+            <h4><a href="http://gemstonesoup.wordpress.com/">Dale Henrichs</a></h4>
+          </div>
+
+          <aside class="notes">
+            Ponytail!
+          </aside>
+        </section>
+
+        <section>
+          <h3>Time traveller</h3>
+          <div class="fragment">
+            <blockquote>
+              The future of Ruby is here, it’s just that we have it over in the Smalltalk world and you guys should come and get it.
+            </blockquote>
+            <img src="/lib/assets/avi.jpg" alt="Avi Bryant" />
+            <h4><a href="http://about.me/avibryant">Avi Bryant</a></h4>
+          </div>
+        </section>
+
+        <section>
+          <p>
+            <img src="https://github.com/MagLev/maglev.github.com/raw/master/images/maglev-logo.gif" />
+          </p>
+        </section>
+
+        <section>
+          <h2>Things we depend on</h2>
+          <h3 class="fragment">&lt;nokogiri&gt;</h3>
+          <h3 class="fragment">bcrypt</h3>
+          <h3 class="fragment">{ json }</h3>
+        </section>
+
+        <section>
+          <h1 class="emphasis">Transparent Object Persistence</h1>
+          <div class="fragment">
+            <blockquote>
+              This is a fundamentally different way of approaching persistence, and it works.
+            </blockquote>
+            <h4><a href="http://about.me/avibryant">Avi Bryant</a></h4>
+          </div>
+        </section>
 				
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 				<section>
 					<h1>The Problem</h1>
-          <!-- TODO: Add frowny face image -->
           <table id="db_table">
             <tr>
               <td>
                 <p class="fragment">PostgreSQL</p>
-                <p class="fragment">Redis</p>
                 <p class="fragment">MongoDB</p>
-                <p class="fragment">CouchDB</p>
                 <p class="fragment">MySQL</p>
               </td>
               <td class="right-align">
-                <p class="fragment">Neo4j</p>
-                <p class="fragment">Memcache</p>
                 <p class="fragment">ClearDB <span class="emphasis">o_O</span></p>
                 <p class="fragment">JustOneDB <span class="emphasis">o_O</span></p>
                 <p class="fragment">Xeround <span class="emphasis">o_O</span></p>
@@ -69,49 +217,27 @@
 				</section>
 
         <section>
-          <h1>A solution?</h1>
-          <p>
-            <img src="https://github.com/MagLev/maglev.github.com/raw/master/images/maglev-logo.gif" />
-          </p>
-					<aside class="notes">
-            I would like to propose a solution, and it's called MagLev.
-          </aside>
-        </section>
-
-        <section>
           <h1>What is it?</h1>
           <h2>It's like...</h2>
         </section>
+
         <section>
           <p>
             <img src="/lib/assets/cruby-logo.png" alt="CRuby" height="350" width="350" />
           </p>
         </section>
+
         <section>
           <p>
             <img src="/lib/assets/rbx-logo.png" alt="Rubinius" height="350" width="350" />
           </p>
         </section>
+
         <section>
           <p>
             <img src="/lib/assets/jruby-logo.png" alt="JRuby" />
           </p>
         </section>
-        <section>
-          <p>
-            <img src="/lib/assets/macruby-logo.png" alt="MacRuby" />
-          </p>
-				</section>
-
-				<section>
-					<p>
-            <img src="/lib/assets/smalltalk-byte-balloon.png" alt="Smalltalk" />
-            <!-- TODO: attribution - http://www.cc.kyoto-su.ac.jp/~atsushi/Smalltalkers/images/SmalltalkBalloon1998.jpg -->
-					</p>
-          <aside class="notes">
-            What's so special about Smalltalk? The image, which I'll explain in a sec.
-          </aside>
-				</section>
 
         <section>
             <div class="equation">
@@ -186,18 +312,6 @@
             <li class="emphasis">Transparent Object Persistence</li>
 					</ol>
 				</section>
-
-        <section data-state="alert">
-          <h2>Transparent Object Persistence</h2>
-          <p>
-            <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Plasma-lamp_2.jpg/474px-Plasma-lamp_2.jpg" alt="plasma lamp" />
-            <!-- TODO: attribution - I, Luc Viatour [GFDL (http://www.gnu.org/copyleft/fdl.html), CC-BY-SA-3.0 (http://creativecommons.org/licenses/by-sa/3.0/) or CC-BY-SA-2.5-2.0-1.0 (http://creativecommons.org/licenses/by-sa/2.5-2.0-1.0)], via Wikimedia Commons
-            http://commons.wikimedia.org/wiki/File%3APlasma-lamp_2.jpg -->
-          </p>
-          <aside class="notes">
-            An image is where the objects live. They are persisted there. They aren't serialized into some other format &amp; stored somewhere else. They <em>live</em> there.
-          </aside>
-        </section>
 
         <section>
           <h2>MagLev</h2>
@@ -404,23 +518,6 @@ Maglev::PERSISTENT_ROOT[:cats].first.object_id
         </section>
 
         <section>
-          <h3>A wise man once asked...</h3>
-          <div class="fragment">
-            <blockquote>
-              How much do you think about saving your data instead of using it?
-            </blockquote>
-          </div>
-          <div class="fragment">
-            <h4>Dale Henrichs</h4>
-            <img src="/lib/assets/dale.jpg" alt="Dale Henrichs" />
-          </div>
-
-          <aside class="notes">
-            Ponytail!
-          </aside>
-        </section>
-
-        <section>
           <h3>What can you (easily) persist today?</h3>
           <p class="fragment">Arrays</p>
           <p class="fragment">Sets</p>
@@ -474,6 +571,11 @@ Maglev::PERSISTENT_ROOT[:cats].first.object_id
         <section>
           <h2>What I could've built with MagLev</h2>
           <img class="fragment" src="/lib/assets/eqh-maglev.png" alt="MagLev EQH design" />
+        </section>
+
+        <section>
+          <h2>Things that work</h2>
+
         </section>
 				
 			</div>

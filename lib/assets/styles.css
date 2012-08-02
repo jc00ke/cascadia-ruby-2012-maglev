@@ -27,3 +27,13 @@
 .right-align {
   text-align: right;
 }
+
+.relational-table {
+  border: 1px solid white;
+  margin: 0 auto;
+}
+
+.relational-table th, .relational-table td{
+  border: 1px solid white;
+  padding: 15px;
+}
