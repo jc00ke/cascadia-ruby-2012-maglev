@@ -39,11 +39,23 @@
 						// Delicously hacky. Look away.
 						if( navigator.userAgent.match( /(iPhone|iPad|iPod|Android)/i ) ) document.write( '<p style="color: rgba(0,0,0,0.3); text-shadow: none;">('+'Tap to navigate'+')</p>' );
 					</script>
+          <aside class="notes">
+            <ul>
+              <li>Ruby is awesome</li>
+              <li>Great community</li>
+            </ul>
+          </aside>
 				</section>
 
         <section>
           <h1>Community</h1>
           <img src="/lib/assets/tenderlove.jpg" alt="Tenderlove being awesome" data-attribution="http://jakescruggs.blogspot.com/2010/06/rails-conf-2010-day-2.html" />
+          <aside class="notes">
+            <ul>
+              <li>Ruby is awesome</li>
+              <li>Great community</li>
+            </ul>
+          </aside>
         </section>
 
         <section>
@@ -72,22 +84,35 @@
               </tr>
             </tbody>
           </table>
+          <aside class="notes">
+            <ul>
+              <li>Assume most work on web apps</li>
+              <li>Literally shoehorn</li>
+            </ul>
+          </aside>
         </section>
 
         <section>
           <h2>Objects!</h2>
-          <pre><code class="ruby"> 
+          <pre><code contenteditable class="ruby"> 
 Widget.find_by_name("foo")
 # or
 User.create({ email: "foo@bar.com" })
           </code></pre>
 
           <h2>Some Query Language :(</h2>
-          <pre><code class="sql"> 
+          <pre><code contenteditable class="sql"> 
 select * from widgets where name = 'foo';
 # or
 insert into users...
           </code></pre>
+          <aside class="notes">
+            <ul>
+              <li>We use ActiveRecord w/MySQL, Datamapper &amp; pg, Mongoid &amp; MongoDB</li>
+              <li>These databases aren't meant to store objects</li>
+              <li>Not designed to do the job we use them for</li>
+            </ul>
+          </aside>
         </section>
 
         <section>
@@ -96,16 +121,32 @@ insert into users...
           <h3><a href="http://www.agiledata.org/essays/impedanceMismatch.html">Agile Data</a></h3>
           <h3><a href="http://c2.com/cgi/wiki?ObjectRelationalImpedanceMismatch">Cunningham &amp; Cunningham</a></h3>
           <h3><a href="http://www.codinghorror.com/blog/2006/06/object-relational-mapping-is-the-vietnam-of-computer-science.html">Coding Horror</a></h3>
+          <aside class="notes">
+            <ul>
+              <li>We constantly build up &amp; rip apart our objects</li>
+              <li>Every request goes to the database &amp; builds up the same object, over and over</li>
+              <li>To make a create a new, or update an existing object, we strip it down to bare fields &amp; send across the wire</li>
+              <li>Huge impedance mismatch there</li>
+            </ul>
+          </aside>
         </section>
 
         <section>
           <h1>PORO</h1>
           <h3>Plain Old Ruby Object</h3>
-          <pre><code class="ruby"> 
+          <pre><code contenteditable class="ruby"> 
 class Post < ActiveRecord::Base
 
 end
           </code></pre>
+          <aside class="notes">
+            <ul>
+              <li>I despise this term</li>
+              <li>Reinforces the impedance mismatch</li>
+              <li>We've been trained to believe our normal Ruby objects are AR objects</li>
+              <li>Unfortunate</li>
+            </ul>
+          </aside>
         </section>
 
         <section>
@@ -115,6 +156,12 @@ end
             <!-- TODO: attribution - I, Luc Viatour [GFDL (http://www.gnu.org/copyleft/fdl.html), CC-BY-SA-3.0 (http://creativecommons.org/licenses/by-sa/3.0/) or CC-BY-SA-2.5-2.0-1.0 (http://creativecommons.org/licenses/by-sa/2.5-2.0-1.0)], via Wikimedia Commons
             http://commons.wikimedia.org/wiki/File%3APlasma-lamp_2.jpg -->
           </p>
+          <aside class="notes">
+            <ul>
+              <li>How did Smalltalk get this right?</li>
+              <li>Explain the image</li>
+            </ul>
+          </aside>
         </section>
 
         <section>
@@ -126,6 +173,12 @@ end
             <img src="/lib/assets/avi.jpg" alt="Avi Bryant" />
             <h4><a href="http://about.me/avibryant">Avi Bryant</a></h4>
           </div>
+          <aside class="notes">
+            <ul>
+              <li>Keynote RailsConf 2007</li>
+              <li>He suggested we petition GemStone to share their magic</li>
+            </ul>
+          </aside>
         </section>
 
 				<section>
@@ -137,7 +190,8 @@ end
             <!-- TODO: attribution - http://www.gemstone.com/products/gemstone -->
 					</p>
           <aside class="notes">
-            From the MagLev site. Lots of buzzwords, and a lot of power in that last word.
+            <p>Lots of buzzwords, and a lot of power in that last word.</p>
+            <p>Well, who's GemStone? (the company)</p>
             <ol>
               <li>Well-tuned VM to run Smalltalk</li>
               <li>
@@ -164,11 +218,32 @@ end
             <img src="/lib/assets/dale.jpg" alt="Dale Henrichs" />
             <h4><a href="http://gemstonesoup.wordpress.com/">Dale Henrichs</a></h4>
           </div>
+          <aside class="notes">
+            <ul>
+              <li>Answer: more than I want</li>
+            </ul>
+          </aside>
         </section>
 
         <section>
-          <h1>Decouple no more</h1>
-          <h2 class="fragment">MagLev <span class="emphasis">becomes</span> your API</h2>
+          <h2><span class="emphasis">Re-</span>Introducing MagLev</h2>
+          <img src="/lib/assets/maglev-logo.gif" alt="MagLev logo" />
+          <aside class="notes">
+            <ul>
+              <li>What is MagLev?</li>
+              <li>Next slide</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>What we want to build</h2>
+          <img src="/lib/assets/eqh-ideal.png" alt="Ideal design" />
+        </section>
+
+        <section>
+          <h2>What we end up building</h2>
+          <img src="/lib/assets/eqh-actual.png" alt="Actual design" />
         </section>
 
         <section>
@@ -178,57 +253,74 @@ end
         </section>
 
         <section>
-          <h2>What we want to build</h2>
-          <img src="/lib/assets/eqh-ideal.png" alt="Ideal EQH design" />
-        </section>
-
-        <section>
-          <h2>What we end up building</h2>
-          <img src="/lib/assets/eqh-actual.png" alt="Actual EQH design" />
-        </section>
-
-        <section>
           <h2>What we could build with MagLev</h2>
-          <img src="/lib/assets/eqh-maglev.png" alt="MagLev EQH design" />
+          <img src="/lib/assets/eqh-maglev.png" alt="MagLev design" />
+          <aside class="notes">
+            <ul>
+              <li>warm, sticky ball of dough</li>
+            </ul>
+          </aside>
         </section>
 
         <section>
-          <h1 class="emphasis">Transparent Object Persistence</h1>
-          <blockquote>
-            I've often wished that I could just do something where I just change a bunch of models and at the end of the request cycle something magical goes through and collects up all the models that have changed and persists them, and I haven't really gotten to that level yet. Sometimes I feel that ActiveRecord is holding me back from that.
-          </blockquote>
-          <p>Avdi Grimm</p>
-        </section>
-
-        <section>
-          <h2 class="emphasis">The Punchline</h2>
-          <blockquote>
-            You can just switch to Java, or .NET.
-          </blockquote>
-          <p>David Laribee</p>
+          <h1>Decouple no more</h1>
+          <h2 class="fragment">MagLev <span class="emphasis">becomes</span> your API</h2>
         </section>
 
         <section>
           <h2 class="emphasis">Transparent Object Persistence</h2>
-          <pre><code class="ruby"> 
+          <div class="fragment">
+            <blockquote>
+              I've often wished that I could just do something where I just change a bunch of models and at the end of the request cycle something magical goes through and collects up all the models that have changed and persists them, and I haven't really gotten to that level yet. Sometimes I feel that ActiveRecord is holding me back from that.
+            </blockquote>
+            <p>Avdi Grimm</p>
+           </div>
+          <aside class="notes">
+            <ul>
+              <li>Driving up last night, lots of traffic</li>
+              <li>Ruby Rogues, DDD w/David Laribee</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2 class="emphasis">The Punchline</h2>
+          <blockquote class="fragment">
+            You can just switch to Java, or .NET.
+          </blockquote>
+          <p>David Laribee</p>
+          <!-- http://rubyrogues.com/rr-061-domain-driven-design-ddd-with-david-laribee/ -->
+        </section>
+
+        <section>
+          <img src="/lib/assets/sad-trombone.png" alt="Waa waaah" />
+          <!-- http://www.hark.com/collections/bvtjyltcpl-trombone -->
+        </section>
+
+        <section>
+          <h2 class="emphasis">Transparent Object Persistence</h2>
+          <pre><code contenteditable class="ruby"> 
 Maglev::PERSISTENT_ROOT
           </code></pre>
+          <aside class="notes">
+            Explain    
+          </aside>
         </section>
 
 
         <section>
           <h2>Simple Example</h2>
-          <pre><code class="ruby"> 
+          <pre><code contenteditable class="ruby"> 
 # VM #1
 Maglev.abort_transaction
-j = Object.new
+j = Rubyist.new("Jesse")
 j.object_id
 # => 1234567
 Maglev::PERSISTENT_ROOT[:jesse] = j
 Maglev.commit_transaction
           </code></pre>
 
-          <pre><code class="ruby"> 
+          <pre class="fragment"><code contenteditable class="ruby"> 
 # VM #2
 Maglev.abort_transaction
 Maglev::PERSISTENT_ROOT[:jesse].object_id
@@ -238,13 +330,13 @@ Maglev::PERSISTENT_ROOT[:jesse].object_id
 
         <section>
           <h1>What is happening?</h1>
-          <div class="fragment">
+          <div>
             <img src="/lib/assets/maglev-stone-diagram.png" />
           </div>
         </section>
 
         <section>
-            <pre><code class="ruby"> 
+            <pre><code contenteditable class="ruby"> 
 Maglev.abort_transaction
             </code></pre>
           <div>
@@ -253,7 +345,7 @@ Maglev.abort_transaction
         </section>
 
         <section>
-            <pre><code class="ruby"> 
+            <pre><code contenteditable class="ruby"> 
 Maglev.commit_transaction
             </code></pre>
           <div>
@@ -263,22 +355,26 @@ Maglev.commit_transaction
 
         <section>
           <h2 class="emphasis">Persistence by Reachability</h2>
-          <pre><code class="ruby"> 
+          <pre><code contenteditable class="ruby"> 
 # VM #1
 Maglev.abort_transaction
+
 cats = CatCollection.new
 pierre = Cat.new("Pierre")
 cats << pierre
 Maglev::PERSISTENT_ROOT[:cats] = cats
+
 Maglev.commit_transaction
 pierre.object_id
 # => 9876543
           </code></pre>
 
-          <pre><code class="ruby"> 
+          <pre class="fragment"><code contenteditable class="ruby"> 
 # VM #2
 Maglev.abort_transaction
-Maglev::PERSISTENT_ROOT[:cats].first.object_id
+persisted_cats = Maglev::PERSISTENT_ROOT[:cats]
+
+persisted_cats.first.object_id
 # => 9876543
           </code></pre>
 
@@ -286,19 +382,22 @@ Maglev::PERSISTENT_ROOT[:cats].first.object_id
 
         <section>
           <h2 class="emphasis">Persistence by Reachability</h2>
-          <pre><code class="ruby"> 
+          <pre><code contenteditable class="ruby"> 
 # VM #3
 Maglev.abort_transaction
+
 pierre = Maglev::PERSISTENT_ROOT[:cats].first
-pierre.favorite_toy = CatNip.new
+pierre.favorite_toy = BallOfYarn.new
+
 Maglev.commit_transaction
           </code></pre>
 
-          <pre><code class="ruby"> 
+          <pre class="fragment"><code contenteditable class="ruby"> 
 # VM #4
 Maglev.abort_transaction
+
 Maglev::PERSISTENT_ROOT[:cats].first.favorite_toy
-# => #&lt;CatNip:123987&gt;
+# => #&lt;BallOfYarn:123987&gt;
           </code></pre>
 
         </section>
@@ -325,14 +424,150 @@ Maglev::PERSISTENT_ROOT[:cats].first.favorite_toy
         </section>
 
         <section>
-          <h3>(Almost) all the objects!</h3>
+          <h3>(Almost) All the objects!</h3>
           <div>Proc</div>
           <div>Binding</div>
           <div class="stricken">IO</div>
         </section>
 
         <section>
-          <h1>A blog</h1>
+          <h2>A blog I whipped up this morning</h2>
+        </section>
+
+        <section>
+          <pre><code contenteditable class="ruby"> 
+class MaglevBlogApp < Sinatra::Application
+  set :root, File.dirname(__FILE__)
+
+  before do
+    @blog = Maglev::PERSISTENT_ROOT[:maglev_blogs].first
+    @posts = @blog.posts
+  end
+
+  get "/" do
+    erb :index
+  end
+end
+          </code></pre>
+        </section>
+
+        <section>
+          <pre><code contenteditable class="ruby"> 
+class MaglevBlogApp < Sinatra::Application
+  # ...
+  get "/posts/:id" do
+    @post = @posts.detect { |post|
+      post.object_id == params[:id].to_i
+    }
+    erb :post
+  end
+end
+          </code></pre>
+        </section>
+
+        <section>
+          <pre><code contenteditable class="ruby"> 
+class MaglevBlogApp < Sinatra::Application
+  # ...
+
+  post "/post" do
+    post = @posts.class.new(params[:title], params[:body])
+    @blog.posts << post
+    redirect "/"
+  end
+end
+          </code></pre>
+        </section>
+
+        <section>
+          <pre><code contenteditable class="ruby"> 
+class MagLevTransactionWrapper
+  def initialize(app)
+    @app = app
+  end
+
+  def call(env)
+    begin
+      Maglev.abort_transaction
+      status, headers, body = @app.call env
+      [status, headers, body]
+    ensure
+      if committable? status
+        Maglev.commit_transaction
+      else
+        Maglev.abort_transaction
+      end
+    end
+  end
+
+  # A Commit-worthy status is success (2xx) or a redirect.
+  def committable?(status)
+    ! status.nil? &&  (200..399).include?(status)
+  end
+end
+          </code></pre>
+        </section>
+
+        <section>
+          <pre><code contenteditable class="ruby"> 
+class MaglevBlog
+  attr_accessor :posts, :name, :author
+  def initialize(name, author_name)
+    @posts = []
+    @name = name
+    @author = Author.new(author_name)
+  end
+  # ...
+end
+          </code></pre>
+        </section>
+
+        <section>
+          <pre><code contenteditable class="ruby"> 
+class MaglevBlog
+  # ...
+
+  class Post
+    attr_accessor :title, :body
+    def initialize(title, body)
+      @title = title
+      @body = body
+    end
+  end
+
+  # ...
+end
+          </code></pre>
+        </section>
+
+        <section>
+          <pre><code contenteditable class="ruby"> 
+class MaglevBlog
+  # ...
+
+  class Author
+    attr_accessor :name
+    def initialize(name)
+      @name = name
+    end
+  end
+end
+          </code></pre>
+        </section>
+
+        <section>
+          <pre><code contenteditable class="ruby"> 
+# bootstrap.rb
+
+Maglev.persistent do
+  load "maglev_blog.rb"
+  blog = MaglevBlog.new("Cascadia Ruby!", "jc00ke")
+  Maglev::PERSISTENT_ROOT[:maglev_blogs] = [blog]
+end
+          </code></pre>
+          <pre><code contenteditable class="bash"> 
+maglev-ruby -Mcommit bootstrap.rb
+          </code></pre>
         </section>
 
         <section>
@@ -348,7 +583,7 @@ Maglev::PERSISTENT_ROOT[:cats].first.favorite_toy
 
         <section>
           <h2>World's worst (but easiest) queue</h2>
-          <pre><code class="ruby"> 
+          <pre><code contenteditable class="ruby"> 
 # pseudo
 jobs = []
 jobs << Proc.new { puts "doing work" }
@@ -358,7 +593,7 @@ jobs.shift.call
 
         <section>
           <h2>Slightly-better producer</h2>
-          <pre><code class="ruby"> 
+          <pre><code contenteditable class="ruby"> 
 Maglev.abort_transaction
 Maglev::PERSISTENT_ROOT[:q] ||= []
 
@@ -371,7 +606,7 @@ end
 
         <section>
           <h2>Slightly-better worker</h2>
-          <pre><code class="ruby"> 
+          <pre><code contenteditable class="ruby"> 
 while true do
   Maglev.abort_transaction
   work = Maglev::PERSISTENT_ROOT[:q].shift
@@ -392,7 +627,7 @@ end
 
         <section>
           <h2>Slightly-better producer</h2>
-          <pre><code class="ruby"> 
+          <pre><code contenteditable class="ruby"> 
 Maglev.abort_transaction
 Maglev::PERSISTENT_ROOT[:q] ||= []
 
@@ -408,7 +643,7 @@ end
 
         <section>
           <h2>Slightly-better worker</h2>
-          <pre><code class="ruby"> 
+          <pre><code contenteditable class="ruby"> 
 while true do
   Maglev.abort_transaction
   work = Maglev::PERSISTENT_ROOT[:q].shift
@@ -450,7 +685,7 @@ end
 
         <section>
           <h2>Slightly-better producer</h2>
-          <pre><code class="ruby">
+          <pre><code contenteditable class="ruby">
 require 'maglev/rcqueue'
 
 Maglev.abort_transaction
@@ -519,7 +754,7 @@ Total Estimated Cost to Develop                           = $ 776
           <h3>HPI 1.9/Rails 4</h3>
           <h3>Your cool projects</h3>
 
-          <pre><code class="bash">
+          <pre><code contenteditable class="bash">
 rvm install maglev
 ruby-build install maglev-1.1.0-dev
 ./install.sh
