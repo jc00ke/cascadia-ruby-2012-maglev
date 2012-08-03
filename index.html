@@ -98,34 +98,25 @@ insert into users...
           <h3><a href="http://www.codinghorror.com/blog/2006/06/object-relational-mapping-is-the-vietnam-of-computer-science.html">Coding Horror</a></h3>
         </section>
 
-				<section>
-          <img src="/lib/assets/smalltalk-byte-balloon.png" alt="Smalltalk" data-attribution="http://www.cc.kyoto-su.ac.jp/~atsushi/Smalltalkers/images/SmalltalkBalloon1998.jpg" />
-				</section>
+        <section>
+          <h1>PORO</h1>
+          <h3>Plain Old Ruby Object</h3>
+          <pre><code class="ruby"> 
+class Post < ActiveRecord::Base
 
-        <section data-state="alert">
+end
+          </code></pre>
+        </section>
+
+        <section>
           <h2>The Image</h2>
           <p>
-            <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Plasma-lamp_2.jpg/474px-Plasma-lamp_2.jpg" alt="plasma lamp" />
+            <img src="/lib/assets/plasma.jpg" alt="plasma lamp" />
             <!-- TODO: attribution - I, Luc Viatour [GFDL (http://www.gnu.org/copyleft/fdl.html), CC-BY-SA-3.0 (http://creativecommons.org/licenses/by-sa/3.0/) or CC-BY-SA-2.5-2.0-1.0 (http://creativecommons.org/licenses/by-sa/2.5-2.0-1.0)], via Wikimedia Commons
             http://commons.wikimedia.org/wiki/File%3APlasma-lamp_2.jpg -->
           </p>
           <aside class="notes">
             An image is where the objects live. They are persisted there. They aren't serialized into some other format &amp; stored somewhere else. They <em>live</em> there.
-          </aside>
-        </section>
-
-        <section>
-          <h3>A wise man once asked...</h3>
-          <div class="fragment">
-            <blockquote>
-              How much do you think about saving your data instead of using it?
-            </blockquote>
-            <img src="/lib/assets/dale.jpg" alt="Dale Henrichs" />
-            <h4><a href="http://gemstonesoup.wordpress.com/">Dale Henrichs</a></h4>
-          </div>
-
-          <aside class="notes">
-            Ponytail!
           </aside>
         </section>
 
@@ -138,12 +129,6 @@ insert into users...
             <img src="/lib/assets/avi.jpg" alt="Avi Bryant" />
             <h4><a href="http://about.me/avibryant">Avi Bryant</a></h4>
           </div>
-        </section>
-
-        <section>
-          <p>
-            <img src="https://github.com/MagLev/maglev.github.com/raw/master/images/maglev-logo.gif" />
-          </p>
         </section>
 
 				<section>
@@ -174,8 +159,14 @@ insert into users...
         </section>
 
         <section>
-          <h1>A confession</h1>
-          <h2 class="fragment">I <span class="emphasis">lied</span></h2>
+          <h3>A wise man once asked...</h3>
+          <div class="fragment">
+            <blockquote>
+              How much do you think about saving your data instead of using it?
+            </blockquote>
+            <img src="/lib/assets/dale.jpg" alt="Dale Henrichs" />
+            <h4><a href="http://gemstonesoup.wordpress.com/">Dale Henrichs</a></h4>
+          </div>
         </section>
 
         <section>
@@ -205,20 +196,11 @@ insert into users...
         </section>
 
         <section>
-          <h2>Things we depend on</h2>
-          <h3 class="fragment">&lt;nokogiri&gt;</h3>
-          <h3 class="fragment">bcrypt</h3>
-          <h3 class="fragment">{ json }</h3>
-        </section>
-
-        <section>
           <h1 class="emphasis">Transparent Object Persistence</h1>
-          <div class="fragment">
-            <blockquote>
-              This is a fundamentally different way of approaching persistence, and it works.
-            </blockquote>
-            <h4><a href="http://about.me/avibryant">Avi Bryant</a></h4>
-          </div>
+          <blockquote>
+            This is a fundamentally different way of approaching persistence, and it works.
+          </blockquote>
+          <h4><a href="http://about.me/avibryant">Avi Bryant</a></h4>
         </section>
 
         <section>
@@ -241,7 +223,7 @@ Maglev::PERSISTENT_ROOT[:jesse] = j
 Maglev.commit_transaction
           </code></pre>
 
-          <pre class="fragment"><code class="ruby"> 
+          <pre><code class="ruby"> 
 # VM #2
 Maglev.abort_transaction
 Maglev::PERSISTENT_ROOT[:jesse].object_id
@@ -260,7 +242,7 @@ Maglev::PERSISTENT_ROOT[:jesse].object_id
             <pre><code class="ruby"> 
 Maglev.abort_transaction
             </code></pre>
-          <div class="fragment">
+          <div>
             <img src="/lib/assets/maglev.abort_transaction.png" />
           </div>
         </section>
@@ -269,17 +251,17 @@ Maglev.abort_transaction
             <pre><code class="ruby"> 
 Maglev.commit_transaction
             </code></pre>
-          <div class="fragment">
+          <div>
             <img src="/lib/assets/maglev.commit_transaction.png" />
           </div>
         </section>
 
         <section>
           <h2 class="emphasis">Persistence by Reachability</h2>
-          <pre class="fragment"><code class="ruby"> 
+          <pre><code class="ruby"> 
 # VM #1
 Maglev.abort_transaction
-cats = []
+cats = CatCollection.new
 pierre = Cat.new("Pierre")
 cats << pierre
 Maglev::PERSISTENT_ROOT[:cats] = cats
@@ -288,11 +270,30 @@ pierre.object_id
 # => 9876543
           </code></pre>
 
-          <pre class="fragment"><code class="ruby"> 
+          <pre><code class="ruby"> 
 # VM #2
 Maglev.abort_transaction
 Maglev::PERSISTENT_ROOT[:cats].first.object_id
 # => 9876543
+          </code></pre>
+
+        </section>
+
+        <section>
+          <h2 class="emphasis">Persistence by Reachability</h2>
+          <pre><code class="ruby"> 
+# VM #3
+Maglev.abort_transaction
+pierre = Maglev::PERSISTENT_ROOT[:cats].first
+pierre.favorite_toy = CatNip.new
+Maglev.commit_transaction
+          </code></pre>
+
+          <pre><code class="ruby"> 
+# VM #4
+Maglev.abort_transaction
+Maglev::PERSISTENT_ROOT[:cats].first.favorite_toy
+# => #&lt;CatNip:123987&gt;
           </code></pre>
 
         </section>
@@ -304,11 +305,6 @@ Maglev::PERSISTENT_ROOT[:cats].first.object_id
           <p class="fragment">Hashes</p>
           <p class="fragment">Counters</p>
           <p class="fragment">Sorted Sets</p>
-
-          <aside class="notes">
-          <p>We already have arrays via associations. Sets via constraints. Hashes with pg's hstore. Counters via db locks &amp; Redis. Sorted Sets via Redis, scopes.</p>
-          <p>But again, you have to understand how all of these underlying databases work in order to use these data structures.</p>
-          </aside>
         </section>
 
         <section>
@@ -324,8 +320,19 @@ Maglev::PERSISTENT_ROOT[:cats].first.object_id
         </section>
 
         <section>
+          <h3>(Almost) all the objects!</h3>
+          <div>Proc</div>
+          <div>Binding</div>
+          <div class="stricken">IO</div>
+        </section>
+
+        <section>
+          <h1>A blog</h1>
+        </section>
+
+        <section>
           <h1>Background Jobs</h1>
-          <div class="fragment">
+          <div>
             <h2>Sidekiq</h2>
             <h2>Resque</h2>
             <h2>Queue Classic</h2>
@@ -336,22 +343,22 @@ Maglev::PERSISTENT_ROOT[:cats].first.object_id
 
         <section>
           <h2>World's worst (but easiest) queue</h2>
-          <pre class="fragment"><code class="ruby"> 
+          <pre><code class="ruby"> 
 # pseudo
 jobs = []
-jobs << Proc.new { # doing work }
+jobs << Proc.new { puts "doing work" }
 jobs.shift.call
           </code></pre>
         </section>
 
         <section>
           <h2>Slightly-better producer</h2>
-          <pre class="fragment"><code class="ruby"> 
+          <pre><code class="ruby"> 
 Maglev.abort_transaction
 Maglev::PERSISTENT_ROOT[:q] ||= []
 
 while true do
-  Maglev::PERSISTENT_ROOT[:q] << Proc.new { # doing work }
+  Maglev::PERSISTENT_ROOT[:q] << Proc.new { puts "doing work" }
   Maglev.commit_transaction
 end
           </code></pre>
@@ -359,7 +366,7 @@ end
 
         <section>
           <h2>Slightly-better worker</h2>
-          <pre class="fragment"><code class="ruby"> 
+          <pre><code class="ruby"> 
 while true do
   Maglev.abort_transaction
   work = Maglev::PERSISTENT_ROOT[:q].shift
@@ -380,12 +387,12 @@ end
 
         <section>
           <h2>Slightly-better producer</h2>
-          <pre class="fragment"><code class="ruby"> 
+          <pre><code class="ruby"> 
 Maglev.abort_transaction
 Maglev::PERSISTENT_ROOT[:q] ||= []
 
 while true do
-  Maglev::PERSISTENT_ROOT[:q] << Proc.new { # doing work }
+  Maglev::PERSISTENT_ROOT[:q] << Proc.new { puts "doing work" }
   Maglev.commit_transaction
 rescue Maglev::CommitFailedException
   puts "Couldn't add the job. Retrying..."
@@ -396,7 +403,7 @@ end
 
         <section>
           <h2>Slightly-better worker</h2>
-          <pre class="fragment"><code class="ruby"> 
+          <pre><code class="ruby"> 
 while true do
   Maglev.abort_transaction
   work = Maglev::PERSISTENT_ROOT[:q].shift
@@ -410,14 +417,6 @@ end
         </section>
 
         <section>
-          <h1 class="emphasis">Tangent!</h1>
-          <h2>Are you persisting a proc?</h2>
-          <h2 class="fragment">Why yes, yes I am.</h2>
-          <h2 class="fragment">But you can't<span class="emphasis">*</span> marshal a proc!</h2>
-          <h2 class="fragment">I'm not</h2>
-        </section>
-
-        <section>
           <h1>Issues?</h1>
           <ol>
             <li class="stricken">What happens if a commit fails?</li>
@@ -428,7 +427,7 @@ end
 
         <section>
           <h2>Reduced Conflict Classes</h2>
-          <div class="fragment">
+          <div>
             <h3 class="normal-heading">RCHash</h3>
             <h3 class="normal-heading">RCQueue</h3>
             <h3 class="normal-heading">RCCounter<span class="emphasis">*</span></h3>
@@ -446,21 +445,21 @@ end
 
         <section>
           <h2>Slightly-better producer</h2>
-          <pre class="fragment"><code class="ruby">
+          <pre><code class="ruby">
 require 'maglev/rcqueue'
 
 Maglev.abort_transaction
 Maglev::PERSISTENT_ROOT[:q] ||= RCQueue.new
 
 while true do
-  Maglev::PERSISTENT_ROOT[:q] << Proc.new { # doing work }
+  Maglev::PERSISTENT_ROOT[:q] << Proc.new { puts "doing work" }
   Maglev.commit_transaction
 rescue Maglev::CommitFailedException
   puts "Couldn't add the job. Retrying..."
   redo
 end
           </code></pre>
-      </section>
+        </section>
 
         <section>
           <h1>Issues?</h1>
@@ -471,14 +470,14 @@ end
           </ol>
         </section>
 
-      <section>
-        <h1>MagLev-Q</h1>
-        <a href="https://github.com/jc00ke/maglev-q">https://github.com/jc00ke/maglev-q</a>
-      </section>
+        <section>
+          <h1>MagLev-Q</h1>
+          <a href="https://github.com/jc00ke/maglev-q">https://github.com/jc00ke/maglev-q</a>
+        </section>
 
-      <section>
-        <h1>What's the point?</h1>
-        <pre>
+        <section>
+          <h1>What's the point?</h1>
+          <pre>
 Totals grouped by language (dominant language first):
 ruby:            34 (100.00%)
 
@@ -488,42 +487,49 @@ Schedule Estimate, Months                                 = 0.90
 Estimated Average Number of Developers (Effort/Schedule)  = 0.08
 Total Estimated Cost to Develop                           = $ 776
  (average salary = $56,286/year, overhead = 2.40).
-        </pre>
-        <p class="tiny">Generated using David A. Wheeler's 'SLOCCount'</p>
-      </section>
+          </pre>
+          <p class="tiny">Generated using David A. Wheeler's 'SLOCCount'</p>
+        </section>
 
-      <section>
-        <h2>Like all implementations</h2>
-        <h2>MagLev needs help</h2>
+        <section>
+          <h2>Like all implementations</h2>
+          <h2>MagLev needs help</h2>
 
-        <div class="fragment">RubySpec - catch up to 1.8.7</div>
-        <div class="fragment">Other C-ext</div>
-        <div class="fragment">RSpec's described_class, etc</div>
-        <div class="fragment">IO</div>
-      </section>
+          <div class="fragment">RubySpec - catch up to 1.8.7</div>
+          <div class="fragment">Other C-ext</div>
+          <div class="fragment">RSpec's described_class, etc</div>
+          <div class="fragment">IO</div>
+        </section>
 
-      <section>
-        <h2>The future of MagLev</h2>
-        <h3>GemStone/S 3.1.0.1</h3>
-        <h3>HPI 1.9/Rails 4</h3>
-        <h3>Your cool projects</h3>
+        <section>
+          <h2>Things we depend on</h2>
+          <h3 class="fragment">&lt;nokogiri&gt;</h3>
+          <h3 class="fragment">bcrypt</h3>
+          <h3 class="fragment">{ json }</h3>
+        </section>
 
-        <pre><code class="bash">
+        <section>
+          <h2>The future of MagLev</h2>
+          <h3>GemStone/S 3.1.0.1</h3>
+          <h3>HPI 1.9/Rails 4</h3>
+          <h3>Your cool projects</h3>
+
+          <pre><code class="bash">
 rvm install maglev
 ruby-build install maglev-1.1.0-dev
 ./install.sh
-        </code></pre>
-      </section>
+          </code></pre>
+        </section>
 
-      <section>
-        <h1>Jesse Cooke</h1>
-        <p><a href="https://github.com/jc00ke">github/jc00ke</a></p>
-        <p><a href="https://twitter.com/jc00ke">@jc00ke</a></p>
-        <p>jesse [at] jc00ke.com</p>
+        <section>
+          <h1>Thanks!</h1>
+          <h2>Jesse Cooke</h2>
+          <p><a href="https://github.com/jc00ke">github/jc00ke</a></p>
+          <p><a href="https://twitter.com/jc00ke">@jc00ke</a></p>
+          <p>jesse [at] jc00ke.com</p>
+        </section>
 
-      </section>
-
-		</div>
+      </div>
 
 			<!-- The navigational controls UI -->
 			<aside class="controls">
